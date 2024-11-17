@@ -45,6 +45,13 @@ TEMPLATES = [
         },
     },
 ]
+STATIC_URL = '/static/'
+
+# Combine both static folders (frontend and mycookiesprivacy)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend/static'),
+    os.path.join(BASE_DIR, 'mycookieprivacy/static'),
+]
 
 
 MIDDLEWARE = [
@@ -69,6 +76,7 @@ INSTALLED_APPS = [
     'accounts',
     'homepage',
     'myapp',
+    'mycookieprivacy',
     # Adaugă și aplicațiile tale aici
 ]
 

@@ -18,11 +18,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-
+from myapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls')),  # This will route the homepage
     path('accounts/', include('accounts.urls')),
     path('myapp/', include('myapp.urls')),
-    
-]
+    path('privacy_policy/', include('mycookieprivacy.urls')),
+]                                    

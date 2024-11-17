@@ -1,0 +1,150 @@
+html, body {
+    height: 100%; /* Ensure the page can take up the full height of the viewport */
+    margin: 0; /* Remove default margin */
+    overflow-y: auto; /* Allow scrolling when content overflows */
+}
+html, body {
+    background-color: transparent !important;
+}
+
+body {
+    background-color: transparent !important;
+}
+body, .container {
+    position: relative;
+    z-index: 1;
+}
+.container {
+    background-color: transparent !important;
+}
+.cookie-section, .cookie-toggle {
+    background-color: transparent !important;
+}
+#cookieConsent {
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    z-index: 9999;
+}
+body {
+    
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 80vh; /* Set the body to 80% of the viewport height */
+    margin: 0;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+.container {
+    background-color: transparent;
+    width: 550px;
+    height: 730px; /* Set a fixed height */
+    margin: 0;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+h1, h2, h4, p {
+    margin-bottom: 5px; /* Reduced margin between text elements */
+}
+/* Cookie Section Styles */
+.cookie-section {
+    display: flex;
+    justify-content: space-between; /* Ensures the content is spaced evenly */
+    align-items: center; /* Align items vertically centered */
+    gap: 10px; /* Space between the heading and text */
+}
+
+/* Active Status */
+.active-status {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #3455e6; /* Green color for active status */
+}
+
+/* Container for the cookie toggle */
+.cookie-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Styling the switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+/* When the checkbox is checked, move the slider to the right */
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center;  /* Centers buttons horizontally */
+    gap: 10px;                /* Space between the buttons */
+    margin-top: 50px;          /* Optional: Adds space above the buttons */
+}
+
+.reject-btn, .confirm-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.reject-btn {
+    background-color: #f44336;  /* Red */
+    color: white;
+}
+
+.confirm-btn {
+    background-color: #4CAF50;  /* Green */
+    color: white;
+}

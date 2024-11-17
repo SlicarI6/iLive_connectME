@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>Welcome to the Homepage!</h1>
-    <p>This is a simple homepage template to check if everything is working correctly.</p>
+    <!-- Header -->
+    <header>
+        <h1>Welcome to our Application</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <section class="intro">
+            <h2>About Us</h2>
+            <p>Welcome to our website! We offer a variety of services to help you achieve your goals.</p>
+            <a href="#" class="btn">Learn More About Our Features.</a>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 - Your Company</p>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" style="background-color: #333; color: #fff; position: fixed; bottom: 0; width: 100%; padding: 10px 0; text-align: center; z-index: 1;">
+        <p style="margin: 0;">We use cookies to ensure you get the best experience on our website. 
+            <a href="#" id="showCookiePolicy" style="color: #FFCC00;">Privacy Policy</a>
+        </p>
+        <button id="acceptCookies" style="background-color: #FFCC00; border: none; padding: 5px 20px; color: #fff;">Accept</button>
+        <button id="rejectCookies" style="background-color: #ddd; border: none; padding: 5px 20px; margin-left: 10px; color: #333;">Reject</button>
+    </div>
+
+    <!-- Cookie Policy Popup -->
+    <div id="cookiePolicyPopup" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); color: #fff; text-align: center; padding: 50px; z-index: 2;">
+        <div id="popupContent" style="background-color: #333; padding: 20px; border-radius: 10px; display: inline-block;">
+            <h2>Cookie Policy</h2>
+            <p>We use cookies to improve your experience. Please review our cookie policy.</p>
+            <button id="closePopup" style="background-color: #FFCC00; border: none; padding: 5px 20px; color: #fff;">Close</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookiesButton = document.getElementById('acceptCookies');
+            const rejectCookiesButton = document.getElementById('rejectCookies');
+            const showCookiePolicyLink = document.getElementById('showCookiePolicy');
+            const cookiePolicyPopup = document.getElementById('cookiePolicyPopup');
+            const closePopupButton = document.getElementById('closePopup');
+
+            // Check if the user already accepted or rejected cookies
+            if (!localStorage.getItem('cookieConsent')) {
+                cookieConsent.style.display = 'block'; // Show banner if no preference is set
+            }
+
+            // Accept cookies
+            acceptCookiesButton.onclick = function() {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieConsent.style.display = 'none'; // Hide banner after accepting
+            }
+
+            // Reject cookies
+            rejectCookiesButton.onclick = function() {
+                localStorage.setItem('cookieConsent', 'rejected');
+                cookieConsent.style.display = 'none'; // Hide banner after rejecting
+            }
+
+            // Show cookie policy popup when link is clicked
+            showCookiePolicyLink.onclick = function() {
+                cookiePolicyPopup.style.display = 'block'; // Show the popup
+            }
+
+            // Close the popup when the close button is clicked
+            closePopupButton.onclick = function() {
+                cookiePolicyPopup.style.display = 'none'; // Hide the popup
+            }
+            localStorage.removeItem('cookieConsent');
+        };
+    </script>
 </body>
 </html>

@@ -1,0 +1,79 @@
+/* General Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+
+/* Header Styling */
+header {
+    background-color: #FFCC00;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    padding: 0.5em;
+}
+
+/* Main Content Styling */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+/* Cookie Consent Banner Styling */
+#cookieConsent {
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0;  /* Adjust padding for better visual */
+    text-align: center;
+    display: none;
+    z-index: 9999; /* Ensure it's on top of other elements */
+}
+
+/* Cookie Consent Text and Button Styling */
+#cookieConsent p {
+    margin: 0;
+}
+
+#cookieConsent button {
+    padding: 10px 25px;
+}
+
+/* Accept Button Styling */
+#cookieConsent button#acceptCookies {
+    background-color: #FFCC00;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Reject Button Styling */
+#cookieConsent button#rejectCookies {
+    background-color: #ddd;
+    color: #333;
+    margin-left: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+}

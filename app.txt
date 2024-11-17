@@ -1,3 +1,4 @@
+ microservices architecture 
 1 - User Authentication (Accounts):
 
 Purpose: Provides user login, registration, and profile management.
