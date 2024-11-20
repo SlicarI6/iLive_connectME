@@ -66,35 +66,53 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('openPrivacyPolicy').addEventListener('click', function (e) {
-                e.preventDefault();
-        
-                fetch('/privacy-policy/') // URL for the Privacy Policy
-                    .then(response => response.text())
-                    .then(html => {
-                        const modal = document.createElement('div');
-                        modal.innerHTML = html;
-                        modal.style.position = 'fixed';
-                        modal.style.top = '0';
-                        modal.style.left = '0';
-                        modal.style.width = '100%';
-                        modal.style.height = '100%';
-                        modal.style.background = 'rgba(0, 0, 0, 0.8)';
-                        modal.style.zIndex = '1000';
-                        modal.style.overflow = 'auto';
-                        modal.style.padding = '20px';
-                        modal.style.color = '#fff';
-        
-                        // Append modal to body
-                        document.body.appendChild(modal);
-        
-                        // Remove modal on click
-                        modal.addEventListener('click', () => modal.remove());
-                    })
-                    .catch(error => console.error('Error loading Privacy Policy:', error));
-            });
-        });
+
+                window.onload = function() {
+                    const cookieConsent = document.getElementById('cookieConsent');
+                    const acceptCookiesButton = document.getElementById('acceptCookies');
+                    const rejectCookiesButton = document.getElementById('rejectCookies');
+                    const showCookiePolicyLink = document.getElementById('showCookiePolicy');
+                    const cookiePolicyPopup = document.getElementById('cookiePolicyPopup');
+                    const closePopupButton = document.getElementById('closePopupButton');
+                    const cookieToggleButtons = document.querySelectorAll('.cookie-toggle'); 
+
+                    // Check if the user already accepted or rejected cookies
+                    if (!localStorage.getItem('cookieConsent')) {
+                        cookieConsent.style.display = 'block'; // Show banner if no preference is set
+                    }
+
+                    // Accept cookies
+                    acceptCookiesButton.onclick = function() {
+                        localStorage.setItem('cookieConsent', 'accepted');
+                        cookieConsent.style.display = 'none'; // Hide banner after accepting
+                    }
+
+                    // Reject cookies
+                    rejectCookiesButton.onclick = function() {
+                        localStorage.setItem('cookieConsent', 'rejected');
+                        cookieConsent.style.display = 'none'; // Hide banner after rejecting
+                    }
+
+                    // Show cookie policy popup when link is clicked
+                    showCookiePolicyLink.onclick = function() {
+                        cookiePolicyPopup.style.display = 'block'; // Show the popup
+                    }
+
+                    // Close the popup when the close button is clicked using addEventListener
+                    closePopupButton.addEventListener('click', function() {
+                        cookiePolicyPopup.style.display = 'none'; // Hide the popup
+                    });
+
+                    document.getElementById("acceptCookies").addEventListener("click", function() {
+                    fetch("/cookies/accept_cookies/?accepted=true");
+                    });
+                    document.getElementById("rejectCookies").addEventListener("click", function() {
+                    fetch("/cookies/accept_cookies/?accepted=false");
+                    });
+
+                    
+                    localStorage.removeItem('cookieConsent');
+                };
         </script>
         
 </body>

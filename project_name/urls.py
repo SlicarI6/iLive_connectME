@@ -25,4 +25,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('myapp/', include('myapp.urls')),
     path('privacy_policy/', include('mycookieprivacy.urls')),
+    path('', include('cookies.urls')),
 ]                                    

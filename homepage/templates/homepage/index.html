@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-70HK7C1J3M"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-70HK7C1J3M');
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -42,51 +51,184 @@
     </div>
 
     <!-- Cookie Policy Popup -->
-    <div id="cookiePolicyPopup" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); color: #fff; text-align: center; padding: 50px; z-index: 2;">
-        <div id="popupContent" style="background-color: #333; padding: 20px; border-radius: 10px; display: inline-block;">
-            <h2>Cookie Policy</h2>
-            <p>We use cookies to improve your experience. Please review our cookie policy.</p>
-            <button id="closePopup" style="background-color: #FFCC00; border: none; padding: 5px 20px; color: #fff;">Close</button>
+    <div id="cookiePolicyPopup" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.6); color: #fff; text-align: center; padding: 50px; z-index: 2;">
+        <div id="popupContent" style="background-color: #ffffff; border-radius: 10px; display: inline-block;">
+            <button id="closePopupButton">X</button>
+                <div class="container">
+                    <div class="privacy-header">
+                        <h1>Privacy Preference Center</h1>
+                        <p>When you visit any website, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience. Because we respect your right to privacy, you can choose not to allow some types of cookies. Click on the different category headings to find out more and change our default settings. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.</p>
+                        <a class="moreinfo" href="https://cookiepedia.co.uk/giving-consent-to-cookies" target="_blank">More information</a>
+                    </div>
+            
+                    <div class="privacy-main">
+                        <section>
+                            <h2>Manage Consent Preferences</h2>
+                            <div class="cookie-section">
+                                <h4>Strictly Necessary Cookies</h4>
+                                <span class="active-status">Always Active</span>
+                            </div>
+                            <p>These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in, or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work. These cookies do not store any personally identifiable information.</p>
+                        </section>
+            
+                        <section>
+                            <div class="cookie-toggle">
+                                <h4>Functional Cookies</h4>
+                                <label class="switch">
+                                    <input type="checkbox" id="functionalCookies1">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <p>These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.</p>
+                        </section>
+                        
+                        <section>
+                            <div class="cookie-toggle">
+                                <h4>Targeting Cookies</h4>
+                                <label class="switch">
+                                    <input type="checkbox" id="functionalCookies2">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.</p>
+                        </section>
+            
+                        <section>
+                            <div class="cookie-toggle">
+                                <h4>Targeting Cookies</h4>
+                                <label class="switch">
+                                    <input type="checkbox" id="functionalCookies3">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <p>These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies we will not know when you have visited our site, and will not be able to monitor its performance.</p>
+                        </section>
+                    </div>
+            
+                    <div class="button-container">
+                        <button class="reject-btn">Reject All</button>
+                        <button class="confirm-btn">Confirm My Choices</button>
+                    </div>
+                
+             </div>
         </div>
     </div>
 
     <script>
-        window.onload = function() {
-            const cookieConsent = document.getElementById('cookieConsent');
-            const acceptCookiesButton = document.getElementById('acceptCookies');
-            const rejectCookiesButton = document.getElementById('rejectCookies');
-            const showCookiePolicyLink = document.getElementById('showCookiePolicy');
-            const cookiePolicyPopup = document.getElementById('cookiePolicyPopup');
-            const closePopupButton = document.getElementById('closePopup');
+window.onload = function() {
+    const cookieConsent = document.getElementById('cookieConsent');
+    const cookieToggleButtons = document.querySelectorAll('.cookie-toggle'); // Selectează toate butoanele cu clasa 'cookie-toggle'
+    const rejectButton = document.getElementById('reject-btn');  // Butonul pentru respingere
+    const confirmButton = document.getElementById('confirm-btn'); // Butonul pentru confirmare
+    const acceptCookiesButton = document.getElementById('acceptCookies'); // Butonul Accept
+    const rejectCookiesButton = document.getElementById('rejectCookies'); // Butonul Reject
+    const cookiePolicyPopup = document.getElementById('cookiePolicyPopup');
+    const closePopupButton = document.getElementById('closePopupButton');
+    
+    // Verifică dacă utilizatorul a acceptat sau respins deja cookies
+    if (!localStorage.getItem('cookieConsent')) {
+        cookieConsent.style.display = 'block'; // Arată bannerul dacă nu există setări salvate
+    }
 
-            // Check if the user already accepted or rejected cookies
-            if (!localStorage.getItem('cookieConsent')) {
-                cookieConsent.style.display = 'block'; // Show banner if no preference is set
-            }
+    // Iterează prin fiecare buton și adaugă un event listener
+    cookieToggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const isAccepted = button.id === 'acceptCookies'; // Verifică dacă butonul apăsat este accept
+            fetch(`/cookies/accept_cookies/?accepted=${isAccepted}`);
+            localStorage.setItem('cookieConsent', isAccepted ? 'accepted' : 'rejected');
+            cookieConsent.style.display = 'none'; // Ascunde bannerul după apăsarea unui buton
+           
+        });
+ 
+    });
 
-            // Accept cookies
-            acceptCookiesButton.onclick = function() {
-                localStorage.setItem('cookieConsent', 'accepted');
-                cookieConsent.style.display = 'none'; // Hide banner after accepting
-            }
+    // Arată politica cookies când se apasă linkul corespunzător
+    document.getElementById('showCookiePolicy').onclick = function() {
+        cookiePolicyPopup.style.display = 'block'; // Arată popup-ul
+  
+    }
 
-            // Reject cookies
-            rejectCookiesButton.onclick = function() {
-                localStorage.setItem('cookieConsent', 'rejected');
-                cookieConsent.style.display = 'none'; // Hide banner after rejecting
-            }
+    // Închide popup-ul când se apasă pe butonul de închidere
+    closePopupButton.addEventListener('click', function() {
+        cookiePolicyPopup.style.display = 'none'; // Ascunde popup-ul
 
-            // Show cookie policy popup when link is clicked
-            showCookiePolicyLink.onclick = function() {
-                cookiePolicyPopup.style.display = 'block'; // Show the popup
-            }
+    });
 
-            // Close the popup when the close button is clicked
-            closePopupButton.onclick = function() {
-                cookiePolicyPopup.style.display = 'none'; // Hide the popup
-            }
-            localStorage.removeItem('cookieConsent');
-        };
+    if (rejectButton) {
+    rejectButton.addEventListener('click', function () {
+        console.log("Reject button clicked");
+        fetch("/cookies/accept_cookies/?accepted=false")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Fetch failed: " + response.statusText);
+                }
+                console.log("Fetch successful");
+            })
+            .catch(error => console.error("Fetch error:", error));
+        localStorage.setItem('cookieConsent', 'rejected');
+        cookieConsent.style.display = 'none';
+    });
+}
+
+
+    // Răspunde la click pe butonul de confirmare
+    if (confirmButton) {
+    confirmButton.addEventListener('click', function () {
+        console.log("Confirm button clicked");
+        fetch("/cookies/accept_cookies/?accepted=true")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Fetch failed: " + response.statusText);
+                }
+                console.log("Fetch successful");
+            })
+            .catch(error => console.error("Fetch error:", error));
+        localStorage.setItem('cookieConsent', 'accepted');
+        cookieConsent.style.display = 'none';
+    });
+}
+
+if (acceptCookiesButton) {
+    acceptCookiesButton.addEventListener('click', function () {
+        console.log("Accept button clicked");
+        fetch("/cookies/accept_cookies/?accepted=true")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Fetch failed: " + response.statusText);
+                }
+                console.log("Fetch successful");
+            })
+            .catch(error => console.error("Fetch error:", error));
+
+        localStorage.setItem('cookieConsent', 'accepted');
+        cookieConsent.style.display = 'none';
+        // Google Analytics tracking will be enabled
+        gtag('config', 'G-70HK7C1J3M');
+    });
+    }
+
+if (rejectCookiesButton) {
+    rejectCookiesButton.addEventListener('click', function () {
+        console.log("Reject button clicked");
+        fetch("/cookies/accept_cookies/?accepted=false")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Fetch failed: " + response.statusText);
+                }
+                console.log("Fetch successful");
+            })
+            .catch(error => console.error("Fetch error:", error));
+
+        localStorage.setItem('cookieConsent', 'rejected');
+        cookieConsent.style.display = 'none';
+        // Disable Google Analytics tracking if rejected
+        window['ga-disable-G-70HK7C1J3M'] = true;  // Disable tracking
+    });
+    }
+    localStorage.removeItem('cookieConsent');
+};  
+
+
     </script>
 </body>
 </html>

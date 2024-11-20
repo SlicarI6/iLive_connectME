@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'homepage',
     'myapp',
     'mycookieprivacy',
+    'cookies',
     # Adaugă și aplicațiile tale aici
 ]
 
