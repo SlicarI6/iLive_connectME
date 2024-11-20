@@ -1,0 +1,246 @@
+/* General Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+
+/* Header Styling */
+header {
+    background-color: #FFCC00;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    padding: 0.5em;
+}
+
+/* Main Content Styling */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+
+#popupContent {
+    margin-top: 10px;
+    text-align: left;
+    transform: scale(0.9); /* Adjust the scale value to your needs */
+    transform-origin: top left; /* Keeps the scaling anchored to the top-left corner */
+    overflow-y: scroll; /* Allows vertical scrolling */
+    scrollbar-width: thin; /* Firefox: makes the scrollbar thin */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+
+.moreinfo {
+    text-align: left;
+}
+#closePopupButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding-top: 15px;
+    padding-right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #000; /* Initial color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: color 0.3s ease; /* Smooth color transition */
+    z-index: 10; /* Ensure the button is on top */
+}
+
+#closePopupButton:hover {
+    color: rgb(216, 216, 255); /* Changes color to blue on hover */
+}
+.container {
+    background-color: transparent;
+    width: 450px;
+    height: 630px; /* Set a fixed height */
+    margin: 0;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+.container h1, .container h2, .container h4, .container p {
+    margin-bottom: 0px;
+    color: black;
+    margin-left: 0; /* Asigură alinierea la stânga */
+    text-align: left; /* Opțional, aliniere text */
+}
+
+.privacy-main h2 {
+    margin-bottom: 20px; /* Adaugă spațiu sub titlul principal */
+}
+
+/* Cookie Consent Banner Styling */
+#cookieConsent {
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0;  /* Adjust padding for better visual */
+    text-align: center;
+    display: none;
+    z-index: 9999; /* Ensure it's on top of other elements */
+}
+.cookie-section {
+    display: flex;
+    justify-content: space-between; /* Ensures the content is spaced evenly */
+    align-items: center; /* Align items vertically centered */
+    gap: 10px; /* Space between the heading and text */
+}
+.active-status {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #3455e6; /* Green color for active status */
+}
+.cookie-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Cookie Consent Text and Button Styling */
+#cookieConsent p {
+    margin: 0;
+}
+.cookie-section h4 {
+    margin: 0; /* Elimină spațiul suplimentar */
+}
+
+#cookieConsent button {
+    padding: 10px 25px;
+}
+
+/* Accept Button Styling */
+#cookieConsent button#acceptCookies {
+    background-color: #FFCC00;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Reject Button Styling */
+#cookieConsent button#rejectCookies {
+    background-color: #ddd;
+    color: #333;
+    margin-left: 10px;
+    border: none;
+    cursor: pointer;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center;  /* Centers buttons horizontally */
+    gap: 10px;                /* Space between the buttons */
+    margin-top: 50px;          /* Optional: Adds space above the buttons */
+}
+
+.reject-btn, .confirm-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.reject-btn {
+    background-color: #f44336;  /* Red */
+    color: white;
+}
+
+.confirm-btn {
+    background-color: #4CAF50;  /* Green */
+    color: white;
+}
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+}
+
+
+
+/* Ascunde "drumul" și săgețile barei de scroll */
+::-webkit-scrollbar {
+    width: 10px;  /* Lățimea barei de scroll */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Ascunde "drumul" */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* Culoarea barei de scroll */
+    border-radius: 10px;
+}
+
+/* Ascunde butoanele de săgeată */
+::-webkit-scrollbar-button {
+    display: none;
+}
+#popupContent {
+    border-radius: 10px; /* păstrează colțurile ovale */
+    overflow: hidden;    /* Ascunde orice scrollbar sau margini vizibile */
+    padding-right: 5px;
+}
