@@ -9,3 +9,4 @@ tornado==6.4.1
 tzdata==2024.2
 dj-database-url==0.5.0
 whitenoise==6.4.0
+gunicorn
