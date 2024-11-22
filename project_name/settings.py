@@ -9,9 +9,11 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+from decouple import Config, Csv
 import os
 from pathlib import Path
 import dj_database_url
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +26,8 @@ SECRET_KEY = 'django-insecure-grx_2&zn0m31gsmcn#wy)3l3xmp=k5o4i0-^dmd*pfvadxg(wq
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['*']  # Permite accesul de oriunde; în producție setează domeniul corect.
+ALLOWED_HOSTS = ['mouseforce.onrender.com']
+  # Permite accesul de oriunde; în producție setează domeniul corect.
 
 
 # Application definition
@@ -44,6 +47,11 @@ TEMPLATES = [
         },
     },
 ]
+config = Config(os.environ)
+
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -86,18 +94,21 @@ INSTALLED_APPS = [
 WSGI_APPLICATION = 'project_name.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'mouseforce_db',
+#         'USER': 'mouseforce_db_user',
+#         'PASSWORD': 'pNligaC0yIfhcmdSfVjP0zIz5iyqZst2',
+#         'HOST': 'dpg-csv0ketumphs739ospl0-a',
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
+        default=config('DATABASE_URL', default='postgres://localhost:5432/dbname', cast=str)
     )
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
