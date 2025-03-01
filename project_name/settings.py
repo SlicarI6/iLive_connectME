@@ -9,11 +9,15 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-from decouple import Config, Csv
+
 import os
 from pathlib import Path
 import dj_database_url
+from decouple import Config
+from decouple import Config, Csv, AutoConfig
+import logging
 from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +30,9 @@ SECRET_KEY = 'django-insecure-grx_2&zn0m31gsmcn#wy)3l3xmp=k5o4i0-^dmd*pfvadxg(wq
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['mouseforce.onrender.com']
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mouseforce.onrender.com']
+
   # Permite accesul de oriunde; în producție setează domeniul corect.
 
 
@@ -47,8 +53,9 @@ TEMPLATES = [
         },
     },
 ]
-config = Config()
+config = AutoConfig()
 
+logging.basicConfig(level=logging.DEBUG)
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
@@ -72,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'project_name.urls'
@@ -88,6 +96,7 @@ INSTALLED_APPS = [
     'myapp',
     'mycookieprivacy',
     'cookies',
+    'corsheaders',
     # Adaugă și aplicațiile tale aici
 ]
 
@@ -105,9 +114,7 @@ WSGI_APPLICATION = 'project_name.wsgi.application'
 #     }
 # }
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL', default='postgres://localhost:5432/dbname', cast=str)
-    )
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
