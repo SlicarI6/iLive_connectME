@@ -102,7 +102,12 @@ INSTALLED_APPS = [
 
 WSGI_APPLICATION = 'project_name.wsgi.application'
 
+CORS_ALLOWED_ORIGINS = [
+    "https://mouseforce.onrender.com",  # Your deployed frontend
+    "http://localhost:3000",  # Local frontend (if needed)
+]
 
+CORS_ALLOW_ALL_ORIGINS = True  # Enable temporarily for debugging (remove later)
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
