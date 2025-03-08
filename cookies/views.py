@@ -21,6 +21,10 @@ def accept_cookies(request):
     
     return response
 
+def view_cookies(request):
+    cookies_data = UserCookies.objects.all()
+    return render(request, 'cookies/view_cookies.html', {'cookies_data': cookies_data})
+
 # def view_cookies(request):
 #     cookies_data = UserCookies.objects.all()
 #     return render(request, 'cookies/view_cookies.html', {'cookies_data': cookies_data})
