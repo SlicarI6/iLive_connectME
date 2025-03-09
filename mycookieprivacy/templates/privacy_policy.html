@@ -66,5 +66,25 @@
         </form>
         
     </div>
+
+    <script>
+        document.querySelector('.reject-btn').addEventListener('click', function(e) {
+            e.preventDefault(); // Previne trimiterea formularului normal
+            fetch("{% url 'privacy_policy' %}", {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'reject_all': 'true'
+                }),
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message); // Afișează mesajul din răspuns
+            });
+        });
+    </script>
+    
 </body>
 </html>
