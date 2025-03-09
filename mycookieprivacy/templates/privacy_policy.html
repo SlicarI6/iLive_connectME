@@ -59,10 +59,12 @@
             </section>
         </main>
 
-        <div class="button-container">
-            <button class="reject-btn">Reject All</button>
-            <button class="confirm-btn">Confirm My Choices</button>
-        </div>
+        <form method="post" action="{% url 'privacy_policy' %}">
+            {% csrf_token %}
+            <button type="submit" name="reject_all" class="reject-btn">Reject All</button>
+            <button type="submit" name="confirm_choices" class="confirm-btn">Confirm My Choices</button>
+        </form>
+        
     </div>
 </body>
 </html>
