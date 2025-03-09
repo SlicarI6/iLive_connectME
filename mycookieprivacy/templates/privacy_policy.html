@@ -85,6 +85,24 @@
             });
         });
     </script>
+    <script>
+        document.querySelector('.confirm-btn').addEventListener('click', function(e) {
+            e.preventDefault(); // Previne trimiterea formularului normal
+            fetch("{% url 'privacy_policy' %}", {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'confirm_choices': 'true'
+                }),
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message); // Afișează mesajul din răspuns
+            });
+        });
+    </script>
     
 </body>
 </html>
