@@ -3,6 +3,13 @@ from django.http import JsonResponse
 from .models import UserCookies
 from django.utils.timezone import now
 
+
+
+def check_cookies(request):
+    cookies_value = request.COOKIES.get('cookies_accepted', 'Not Set')
+    return JsonResponse({'cookies_accepted': cookies_value})
+
+
 def accept_cookies(request):
     user_ip = request.META.get('REMOTE_ADDR')  
     accepted = request.GET.get('accepted', 'false') == 'true'  
