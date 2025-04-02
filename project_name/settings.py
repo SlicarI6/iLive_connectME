@@ -110,26 +110,26 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  # Enable temporarily for debugging (remove later)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'mouseforce_db',
-#         'USER': 'mouseforce_db_user',
-#         'PASSWORD': 'pNligaC0yIfhcmdSfVjP0zIz5iyqZst2',
-#         'HOST': 'dpg-csv0ketumphs739ospl0-a',
-#         'PORT': '5432',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mouseforce_db_camping',
         'USER': 'mouseforce_db_camping_user',
         'PASSWORD': '8GQ04AA7sxdk1Xb6ZwJ3zewVWnULpdsW',
-        'HOST': 'dpg-cv1mmm3tq21c73d85ha0-a.oregon-postgres.render.com',
+        'HOST': 'dpg-cv1mmm3tq21c73d85ha0-a',
         'PORT': '5432',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'mouseforce_db_camping',
+#         'USER': 'mouseforce_db_camping_user',
+#         'PASSWORD': '8GQ04AA7sxdk1Xb6ZwJ3zewVWnULpdsW',
+#         'HOST': 'dpg-cv1mmm3tq21c73d85ha0-a.oregon-postgres.render.com',
+#         'PORT': '5432',
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
