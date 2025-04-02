@@ -18,12 +18,21 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from myapp import views
+from django.conf import settings
+from django.conf.urls.static import static
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('', include('homepage.urls')),  # This will route the homepage
+#     path('accounts/', include('Mouseforce.accounts.urls')),
+#     path('myapp/', include('myapp.urls')),
+#     path('privacy_policy/', include('mycookieprivacy.urls')),
+#     path('', include('cookies.urls')),
+# ]                                    
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('homepage.urls')),  # This will route the homepage
-    path('accounts/', include('accounts.urls')),
-    path('myapp/', include('myapp.urls')),
-    path('privacy_policy/', include('mycookieprivacy.urls')),
-    path('', include('cookies.urls')),
-]                                    
+    path('', include('Mouseforce.homepage.urls')),
+    path('accounts/', include('Mouseforce.accounts.urls')),  # Asigură-te că are prefix
+    path('myapp/', include('Mouseforce.myapp.urls')),
+    path('privacy_policy/', include('Mouseforce.mycookieprivacy.urls')),
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

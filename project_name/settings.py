@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-grx_2&zn0m31gsmcn#wy)3l3xmp=k5o4i0-^dmd*pfvadxg(wq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mouseforce.onrender.com']
 
@@ -65,11 +65,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Combine both static folders (frontend and mycookiesprivacy)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/static'),
-    os.path.join(BASE_DIR, 'mycookieprivacy/static'),
+    os.path.join(BASE_DIR, 'Mouseforce', 'homepage', 'static'),
+    os.path.join(BASE_DIR, 'Mouseforce', 'mycookieprivacy', 'static'),
 ]
 
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+print("BASE_DIR:", BASE_DIR) 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -91,11 +93,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',  # Gestionarea sesiunilor
     'django.contrib.messages',  # Mesaje flash
     'django.contrib.staticfiles',  # Fișiere statice (CSS, JS)
-    'accounts',
-    'homepage',
-    'myapp',
-    'mycookieprivacy',
-    'cookies',
+    'Mouseforce.accounts',
+    'Mouseforce.homepage',
+    'Mouseforce.myapp',
+    'Mouseforce.mycookieprivacy',
     'corsheaders',
     # Adaugă și aplicațiile tale aici
 ]
@@ -105,6 +106,7 @@ WSGI_APPLICATION = 'project_name.wsgi.application'
 CORS_ALLOWED_ORIGINS = [
     "https://mouseforce.onrender.com",  # Your deployed frontend
     "http://localhost:3000",  # Local frontend (if needed)
+    "http://127.0.0.1:8080",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  # Enable temporarily for debugging (remove later)
@@ -118,13 +120,23 @@ CORS_ALLOW_ALL_ORIGINS = True  # Enable temporarily for debugging (remove later)
 #         'PORT': '5432',
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'mouseforce_db_camping',
+#         'USER': 'mouseforce_db_camping_user',
+#         'PASSWORD': '8GQ04AA7sxdk1Xb6ZwJ3zewVWnULpdsW',
+#         'HOST': 'dpg-cv1mmm3tq21c73d85ha0-a.oregon-postgres.render.com',
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mouseforce_db_camping',
-        'USER': 'mouseforce_db_camping_user',
-        'PASSWORD': '8GQ04AA7sxdk1Xb6ZwJ3zewVWnULpdsW',
-        'HOST': 'dpg-cv1mmm3tq21c73d85ha0-a.oregon-postgres.render.com',
+        'USER': 'postgres',
+        'PASSWORD': 'unreal89a',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
