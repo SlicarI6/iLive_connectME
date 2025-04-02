@@ -25,8 +25,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-grx_2&zn0m31gsmcn#wy)3l3xmp=k5o4i0-^dmd*pfvadxg(wq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -93,10 +91,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',  # Gestionarea sesiunilor
     'django.contrib.messages',  # Mesaje flash
     'django.contrib.staticfiles',  # Fișiere statice (CSS, JS)
-    'Mouseforce.accounts',
-    'Mouseforce.homepage',
-    'Mouseforce.myapp',
-    'Mouseforce.mycookieprivacy',
+    'accounts',
+    'homepage',
+    'myapp',
+    'mycookieprivacy',
     'corsheaders',
     # Adaugă și aplicațiile tale aici
 ]
