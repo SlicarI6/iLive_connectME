@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const path = require('path');
 
 module.exports = {
@@ -27,6 +28,8 @@ module.exports = {
   },
 };
 =======
+=======
+>>>>>>> 8a8f2d4e4b69a888f9758423c929958166440b28
 const path = require('path');
 
 module.exports = {
@@ -54,4 +57,7 @@ module.exports = {
     extensions: ['.js'],
   },
 };
+<<<<<<< HEAD
 >>>>>>> 8a8f2d4 (Fix line endings)
+=======
+>>>>>>> 8a8f2d4e4b69a888f9758423c929958166440b28
