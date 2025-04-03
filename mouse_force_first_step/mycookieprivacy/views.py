@@ -24,7 +24,7 @@ from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
-from Mouseforce.mycookieprivacy.models import UserCookies
+from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from .models import UserCookies
 
 @csrf_exempt  # Temporar, dacă ai probleme cu CSRF (ideal să fie configurat corect)

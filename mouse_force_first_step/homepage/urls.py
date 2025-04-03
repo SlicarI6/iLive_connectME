@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from Mouseforce.mycookieprivacy import views as cookie_views
+from mouse_force_first_step.mycookieprivacy import views as cookie_views
 urlpatterns = [
     
     path('', views.index, name='index'),

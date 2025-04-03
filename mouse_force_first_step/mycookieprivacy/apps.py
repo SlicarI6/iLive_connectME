@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 class MyappConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Mouseforce.mycookieprivacy'
+    name = 'mouse_force_first_step.mycookieprivacy'
