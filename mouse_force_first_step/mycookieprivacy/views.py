@@ -24,6 +24,9 @@ from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
+
+from mouse_force_first_step.mycookieprivacy.models import UserCookies
+
 from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from .models import UserCookies
 
