@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_page_style.css' %}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-70HK7C1J3M"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-70HK7C1J3M');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Welcome to our Application</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <section class="intro">
+            <h2>About Us</h2>
+            <p>Welcome to our website! We offer a variety of services to help you achieve your goals.</p>
+            <a href="#" class="btn">Learn More About Our Features.</a>
+        </section>
+    </main>
+    <div id="cookieConsent" style="background-color: #333; color: #fff; position: fixed; bottom: 0; width: 100%; padding: 10px 0; text-align: center; z-index: 1;">
+        <p style="margin: 0;">We use cookies to ensure you get the best experience on our website.
+            <a href="{% url 'privacy_policy' %}" style="color: #FFCC00;">Privacy Policy</a>
+ 
+            <!-- <a href="#" id="showCookiePolicy" style="color: #FFCC00;">Privacy Policy</a> -->
+        </p>
+        <button id="acceptCookies" style="background-color: #FFCC00; border: none; padding: 5px 20px; color: #fff;">Accept</button>
+        <button id="rejectCookies" style="background-color: #ddd; border: none; padding: 5px 20px; margin-left: 10px; color: #333;">Reject</button>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 - Your Company</p>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+
+
+   
+    <script>
+function getCSRFToken() {
+    let csrfToken = null;
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith('csrftoken=')) {
+            csrfToken = cookie.substring('csrftoken='.length, cookie.length);
+            break;
+        }
+    }
+    return csrfToken;
+}
+
+window.onload = function() {
+    const cookieConsent = document.getElementById('cookieConsent');
+    const acceptCookiesButton = document.getElementById('acceptCookies'); // Butonul Accept
+    const rejectCookiesButton = document.getElementById('rejectCookies'); // Butonul Reject
+
+    if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'rejected') {
+        cookieConsent.style.display = 'none'; 
+    } else {
+        cookieConsent.style.display = 'block';
+    }
+
+    // Butonul Accept
+    if (acceptCookiesButton) {
+        acceptCookiesButton.addEventListener('click', function () {
+            console.log("Accept button clicked");
+
+            // Obține token-ul CSRF
+            const csrfToken = getCSRFToken();
+
+            fetch("/accept_cookies/", {
+                method: 'POST',  // Folosește POST
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken  // Include token-ul CSRF
+                },
+                body: JSON.stringify({
+                    accepted: true  // Trimite consimțământul
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    
+                }
+            })
+            .catch(error => console.error("Fetch error:", error));
+
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.style.display = 'none';
+            gtag('config', 'G-70HK7C1J3M'); // Google Analytics tracking
+        });
+    }
+
+    // Butonul Reject
+    if (rejectCookiesButton) {
+        rejectCookiesButton.addEventListener('click', function () {
+            console.log("Reject button clicked");
+
+            // Obține token-ul CSRF
+            const csrfToken = getCSRFToken();
+
+            fetch("/accept_cookies/", {
+                method: 'POST',  // Folosește POST pentru a trimite datele
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken  // Include token-ul CSRF
+                },
+                body: JSON.stringify({
+                    accepted: false  // Trimite refuzul consimțământului
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log("Cookies rejected successfully!");
+                }
+            })
+            .catch(error => console.error("Fetch error:", error));
+
+            localStorage.setItem('cookieConsent', 'rejected');
+            cookieConsent.style.display = 'none';
+            // Disable Google Analytics tracking if rejected
+            window['ga-disable-G-70HK7C1J3M'] = true; // Dezactivează Google Analytics tracking
+        });
+    }
+
+    localStorage.removeItem('cookieConsent');
+};
+
+
+
+    </script>
+</body>
+</html>
