@@ -92,7 +92,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',  # Mesaje flash
     'django.contrib.staticfiles',  # Fișiere statice (CSS, JS)
     'mouse_force_first_step.accounts',
-    'homepage',
+    'mouse_force_first_step.homepage',
     'myapp',
     'mycookieprivacy',
     'corsheaders',
