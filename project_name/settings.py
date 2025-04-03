@@ -93,8 +93,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',  # Fișiere statice (CSS, JS)
     'mouse_force_first_step.accounts',
     'mouse_force_first_step.homepage',
-    'myapp',
-    'mycookieprivacy',
+    'mouse_force_first_step.myapp',
+    'mouse_force_first_step.mycookieprivacy',
     'corsheaders',
     # Adaugă și aplicațiile tale aici
 ]
