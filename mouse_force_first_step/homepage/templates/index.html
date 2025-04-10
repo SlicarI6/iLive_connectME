@@ -88,15 +88,13 @@ window.onload = function() {
             const csrfToken = getCSRFToken();
 
             fetch("/accept_cookies/", {
-                method: 'POST',  // Folosește POST
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken  // Include token-ul CSRF
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    accepted: true  // Trimite consimțământul
-                })
+                body: JSON.stringify({ accepted: true })
             })
+
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
