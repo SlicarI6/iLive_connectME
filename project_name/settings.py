@@ -29,6 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = ['https://mouseforce.onrender.com']
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mouseforce.onrender.com']
 
   # Permite accesul de oriunde; în producție setează domeniul corect.
