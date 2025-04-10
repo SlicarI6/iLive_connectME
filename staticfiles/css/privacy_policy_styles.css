@@ -16,11 +16,13 @@
 .modal {
     background-color: white;
     padding: 30px;
-    border-radius: 10px;
-    max-width: 800px;
-    width: 80%;
+    width: 60%;
+    max-width: 600px;
+    max-height: 80vh; /* înălțime max */
+    overflow-y: auto; /* scroll intern */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    margin: auto;
+    position: relative;
 }
 
 /* Header */
@@ -53,26 +55,39 @@ section h2 {
     color: #333;
 }
 
-button {
-    background-color: #4CAF50;
+/* Butoane */
+.reject-btn,
+.confirm-btn {
+    background-color: #6900d1;
     color: white;
-    padding: 15px 30px;
     border: none;
-    cursor: pointer;
+    padding: 10px 20px;
     border-radius: 5px;
-    margin-top: 20px;
-    font-size: 1.2em;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 10px;
     transition: background-color 0.3s;
 }
 
-button.reject-btn {
-    background-color: #f44336;
+.reject-btn:hover,
+.confirm-btn:hover {
+    background-color: #5300a8;
 }
 
-button.reject-btn:hover {
-    background-color: #e53935;
+/* Scroll personalizat pentru .modal */
+.modal::-webkit-scrollbar {
+    width: 12px;
 }
 
-button:hover {
-    background-color: #45a049;
+.modal::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
 }
+
+.modal::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 12px;
+    border: 3px solid #f0f0f0;
+}
+

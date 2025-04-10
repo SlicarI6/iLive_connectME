@@ -108,38 +108,28 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  # Enable temporarily for debugging (remove later)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mouseforce_db_camping',
-        'USER': 'mouseforce_db_camping_user',
-        'PASSWORD': '8GQ04AA7sxdk1Xb6ZwJ3zewVWnULpdsW',
-        'HOST': 'dpg-cv1mmm3tq21c73d85ha0-a',
-        'PORT': '5432',
-    }
-}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'mouseforce_db_camping',
 #         'USER': 'mouseforce_db_camping_user',
 #         'PASSWORD': '8GQ04AA7sxdk1Xb6ZwJ3zewVWnULpdsW',
-#         'HOST': 'dpg-cv1mmm3tq21c73d85ha0-a.oregon-postgres.render.com',
+#         'HOST': 'dpg-cv1mmm3tq21c73d85ha0-a',
 #         'PORT': '5432',
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'mouseforce_db_camping',
-#         'USER': 'postgres',
-#         'PASSWORD': 'unreal89a',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mouseforce_db_camping',
+        'USER': 'postgres',
+        'PASSWORD': 'unreal89a',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
