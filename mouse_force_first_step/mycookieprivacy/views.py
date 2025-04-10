@@ -10,7 +10,7 @@ from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from .models import UserCookies
 
-@csrf_exempt  # Temporar, dacă ai probleme cu CSRF (ideal să fie configurat corect)
+# @csrf_exempt  # Temporar, dacă ai probleme cu CSRF (ideal să fie configurat corect)
 def privacy_policy(request):
     if request.method == 'GET':
         return render(request, 'privacy_policy.html')  # sau numele corect al template-ului
@@ -47,6 +47,7 @@ def privacy_policy(request):
 def accept_cookies(request):
     if request.method == 'POST':
         try:
+            print("Token primit:", request.META.get("HTTP_X_CSRFTOKEN"))  # adaugă pentru verificare
             # Citește datele trimise în body-ul cererii
             data = json.loads(request.body)
             accepted_cookies = data.get('accepted', False)
@@ -64,7 +65,10 @@ def accept_cookies(request):
             )
 
             # Răspunsul pozitiv
-            return JsonResponse({'status': 'success', 'message': 'Cookies accepted'})
+            if accepted_cookies:
+                return JsonResponse({'status': 'success', 'message': 'Cookies accepted'})
+            else:
+                return JsonResponse({'status': 'success', 'message': 'Cookies rejected'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
