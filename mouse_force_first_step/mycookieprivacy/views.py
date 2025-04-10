@@ -10,7 +10,7 @@ from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from .models import UserCookies
 
-@csrf_exempt  # Temporar, dacă ai probleme cu CSRF (ideal să fie configurat corect)
+
 def privacy_policy(request):
     if request.method == 'GET':
         return render(request, 'privacy_policy.html')  # sau numele corect al template-ului

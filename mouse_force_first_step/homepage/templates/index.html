@@ -54,7 +54,7 @@
 
 
    
-    <script>
+<script>
 function getCSRFToken() {
     let csrfToken = null;
     const cookies = document.cookie.split(';');
@@ -88,13 +88,15 @@ window.onload = function() {
             const csrfToken = getCSRFToken();
 
             fetch("/accept_cookies/", {
-                method: 'POST',
+                method: 'POST',  // Folosește POST
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken  // Include token-ul CSRF
                 },
-                body: JSON.stringify({ accepted: true })
+                body: JSON.stringify({
+                    accepted: true  // Trimite consimțământul
+                })
             })
-
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
