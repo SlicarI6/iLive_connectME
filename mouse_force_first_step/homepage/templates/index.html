@@ -18,6 +18,7 @@
     </script>
 </head>
 <body>
+    <input type="hidden" id="csrf_token_input" value="{{ csrf_token }}">
     <!-- Header -->
     <header>
         <h1>Welcome to our Application</h1>
@@ -118,7 +119,8 @@ window.onload = function() {
             console.log("Reject button clicked");
 
             // Obține token-ul CSRF
-            const csrfToken = getCSRFToken();
+            const csrfToken = document.getElementById('csrf_token_input').value;
+
 
             fetch("/accept_cookies/", {
                 method: 'POST',  // Folosește POST pentru a trimite datele
