@@ -1,23 +1,14 @@
 
 from django.shortcuts import render
 from django.http import JsonResponse
-import json
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
-from mouse_force_first_step.mycookieprivacy.models import UserCookies
-
-from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from .models import UserCookies
-
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.http import require_POST
 from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from django.utils.timezone import now
 import json
-
+from django.core.management import call_command
 # @csrf_exempt  # Temporar, dacă ai probleme cu CSRF (ideal să fie configurat corect)
 def privacy_policy(request):
     if request.method == 'GET':
@@ -87,3 +78,7 @@ def accept_cookies(request):
 
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+def run_migrations(request):
+    call_command('migrate', 'mycookieprivacy')
+    return JsonResponse({'status': 'ok', 'message': 'Migration applied'})
