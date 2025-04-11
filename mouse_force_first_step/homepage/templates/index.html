@@ -46,6 +46,10 @@
         <button id="acceptCookies" style="background-color: #FFCC00; border: none; padding: 5px 20px; color: #fff;">Accept</button>
         <button id="rejectCookies" style="background-color: #ddd; border: none; padding: 5px 20px; margin-left: 10px; color: #333;">Reject</button>
     </div>
+    <form method="post" action="/accept_cookies/" style="margin-top: 30px;">
+        {% csrf_token %}
+        <button type="submit">Test POST fără fetch</button>
+      </form>
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 - Your Company</p>

@@ -49,7 +49,7 @@ def privacy_policy(request):
 def accept_cookies(request):
     print("✅ BODY:", request.body)
     print("✅ META:", request.META)
-
+    print("🟢 FORM primit:", request.POST)
     if request.method == 'POST':
         try:
             print("Token primit:", request.META.get("HTTP_X_CSRFTOKEN"))  # adaugă pentru verificare
