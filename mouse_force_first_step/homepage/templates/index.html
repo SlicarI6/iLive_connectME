@@ -18,7 +18,6 @@
     </script>
 </head>
 <body>
-    <input type="hidden" id="csrf_token_input" value="{{ csrf_token }}">
     <!-- Header -->
     <header>
         <h1>Welcome to our Application</h1>
@@ -55,103 +54,89 @@
 
 
    
-<script>
-function getCSRFToken() {
-    let csrfToken = null;
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith('csrftoken=')) {
-            csrfToken = cookie.substring('csrftoken='.length, cookie.length);
-            break;
+    <script>
+        function getCSRFToken() {
+            let csrfToken = null;
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith('csrftoken=')) {
+                    csrfToken = cookie.substring('csrftoken='.length, cookie.length);
+                    break;
+                }
+            }
+            console.log("Token CSRF:", csrfToken);
+            return csrfToken;
         }
-    }
-    console.log("Token CSRF:", csrfToken);
-    return csrfToken;
-}
-
-window.onload = function() {
-    const cookieConsent = document.getElementById('cookieConsent');
-    const acceptCookiesButton = document.getElementById('acceptCookies'); // Butonul Accept
-    const rejectCookiesButton = document.getElementById('rejectCookies'); // Butonul Reject
-
-    if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'rejected') {
-        cookieConsent.style.display = 'none'; 
-    } else {
-        cookieConsent.style.display = 'block';
-    }
-
-    // Butonul Accept
-    if (acceptCookiesButton) {
-        acceptCookiesButton.addEventListener('click', function () {
-            console.log("Accept button clicked");
-
-            // Obține token-ul CSRF
-            const csrfToken = getCSRFToken();
-
-            fetch("/accept_cookies/", {
-                method: 'POST',  // Folosește POST
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken  // Include token-ul CSRF
-                },
-                body: JSON.stringify({
-                    accepted: true  // Trimite consimțământul
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    
-                }
-            })
-            .catch(error => console.error("Fetch error:", error));
-
-            localStorage.setItem('cookieConsent', 'accepted');
-            cookieConsent.style.display = 'none';
-            gtag('config', 'G-70HK7C1J3M'); // Google Analytics tracking
-        });
-    }
-
-    // Butonul Reject
-    if (rejectCookiesButton) {
-        rejectCookiesButton.addEventListener('click', function () {
-            console.log("Reject button clicked");
-
-            // Obține token-ul CSRF
-            const csrfToken = document.getElementById('csrf_token_input').value;
-
-
-            fetch("/accept_cookies/", {
-                method: 'POST',  // Folosește POST pentru a trimite datele
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken  // Include token-ul CSRF
-                },
-                body: JSON.stringify({
-                    accepted: false  // Trimite refuzul consimțământului
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    console.log("Cookies rejected successfully!");
-                }
-            })
-            .catch(error => console.error("Fetch error:", error));
-
-            localStorage.setItem('cookieConsent', 'rejected');
-            cookieConsent.style.display = 'none';
-            // Disable Google Analytics tracking if rejected
-            window['ga-disable-G-70HK7C1J3M'] = true; // Dezactivează Google Analytics tracking
-        });
-    }
-
-    localStorage.removeItem('cookieConsent');
-};
-
-
-
-    </script>
+        
+        window.onload = function() {
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookiesButton = document.getElementById('acceptCookies');
+            const rejectCookiesButton = document.getElementById('rejectCookies');
+        
+            if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'rejected') {
+                cookieConsent.style.display = 'none'; 
+            } else {
+                cookieConsent.style.display = 'block';
+            }
+        
+            if (acceptCookiesButton) {
+                acceptCookiesButton.addEventListener('click', function () {
+                    console.log("Accept button clicked");
+                    const csrfToken = getCSRFToken();
+        
+                    fetch("/accept_cookies/", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify({ accepted: true })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            console.log("Cookies accepted successfully!");
+                        }
+                    })
+                    .catch(error => console.error("Fetch error:", error));
+        
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    cookieConsent.style.display = 'none';
+                    gtag('config', 'G-70HK7C1J3M');
+                });
+            }
+        
+            if (rejectCookiesButton) {
+                rejectCookiesButton.addEventListener('click', function () {
+                    console.log("Reject button clicked");
+                    const csrfToken = getCSRFToken();
+        
+                    fetch("/accept_cookies/", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify({ accepted: false })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            console.log("Cookies rejected successfully!");
+                        }
+                    })
+                    .catch(error => console.error("Fetch error:", error));
+        
+                    localStorage.setItem('cookieConsent', 'rejected');
+                    cookieConsent.style.display = 'none';
+                    window['ga-disable-G-70HK7C1J3M'] = true;
+                });
+            }
+        
+            localStorage.removeItem('cookieConsent');
+        };
+        </script>
+        
 </body>
 </html>
