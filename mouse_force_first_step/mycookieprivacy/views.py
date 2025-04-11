@@ -4,7 +4,8 @@ from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
-
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_POST
 from mouse_force_first_step.mycookieprivacy.models import UserCookies
 
 from mouse_force_first_step.mycookieprivacy.models import UserCookies
@@ -43,10 +44,12 @@ def privacy_policy(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
-
+@csrf_protect
+@require_POST
 def accept_cookies(request):
     print("✅ BODY:", request.body)
     print("✅ META:", request.META)
+
     if request.method == 'POST':
         try:
             print("Token primit:", request.META.get("HTTP_X_CSRFTOKEN"))  # adaugă pentru verificare
