@@ -18,6 +18,7 @@
     </script>
 </head>
 <body>
+    <input type="hidden" id="csrf_token_input" value="{{ csrf_token }}">
     <!-- Header -->
     <header>
         <h1>Welcome to our Application</h1>
@@ -89,6 +90,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                             credentials: 'same-origin',
                             'X-CSRFToken': csrfToken
                         },
                         body: JSON.stringify({ accepted: true })
@@ -114,6 +116,7 @@
         
                     fetch("/accept_cookies/", {
                         method: 'POST',
+                        credentials: 'same-origin',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRFToken': csrfToken
