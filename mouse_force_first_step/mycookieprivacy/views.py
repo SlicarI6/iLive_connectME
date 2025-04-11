@@ -11,6 +11,13 @@ from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from mouse_force_first_step.mycookieprivacy.models import UserCookies
 from .models import UserCookies
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_POST
+from mouse_force_first_step.mycookieprivacy.models import UserCookies
+from django.utils.timezone import now
+import json
+
 # @csrf_exempt  # Temporar, dacă ai probleme cu CSRF (ideal să fie configurat corect)
 def privacy_policy(request):
     if request.method == 'GET':
@@ -44,37 +51,39 @@ def privacy_policy(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
+
 @csrf_protect
 @require_POST
 def accept_cookies(request):
     print("✅ BODY:", request.body)
     print("✅ META:", request.META)
     print("🟢 FORM primit:", request.POST)
-    if request.method == 'POST':
-        try:
-            print("Token primit:", request.META.get("HTTP_X_CSRFTOKEN"))  # adaugă pentru verificare
-            # Citește datele trimise în body-ul cererii
+    
+    try:
+        print("Token primit:", request.META.get("HTTP_X_CSRFTOKEN"))
+
+        if request.content_type == 'application/json':
             data = json.loads(request.body)
-            accepted_cookies = data.get('accepted', False)
+        else:
+            data = request.POST
 
-            # Obține IP-ul utilizatorului
-            user_ip = request.META.get('REMOTE_ADDR')
+        accepted_cookies = data.get('accepted', False)
+        print("✅ accepted_cookies:", accepted_cookies)
 
-            # Salvează consimțământul în baza de date
-            UserCookies.objects.create(
-                user_ip=user_ip,
-                accepted_cookies=accepted_cookies,
-                functional_advertising=False,  # Poți modifica în funcție de alegerea utilizatorului
-                functional_analytics=False,
-                functional_personalisation=True
-            )
+        user_ip = request.META.get('REMOTE_ADDR')
 
-            # Răspunsul pozitiv
-            if accepted_cookies:
-                return JsonResponse({'status': 'success', 'message': 'Cookies accepted'})
-            else:
-                return JsonResponse({'status': 'success', 'message': 'Cookies rejected'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+        UserCookies.objects.create(
+            user_ip=user_ip,
+            accepted_cookies=accepted_cookies in [True, 'true', 'True', '1', 'on'],
+            functional_advertising=False,
+            functional_analytics=False,
+            functional_personalisation=True,
+            accepted_at=now()
+        )
 
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+        message = 'Cookies accepted' if accepted_cookies else 'Cookies rejected'
+        return JsonResponse({'status': 'success', 'message': message})
+
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
