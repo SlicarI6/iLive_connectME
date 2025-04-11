@@ -45,6 +45,8 @@ def privacy_policy(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
 def accept_cookies(request):
+    print("✅ BODY:", request.body)
+    print("✅ META:", request.META)
     if request.method == 'POST':
         try:
             print("Token primit:", request.META.get("HTTP_X_CSRFTOKEN"))  # adaugă pentru verificare
