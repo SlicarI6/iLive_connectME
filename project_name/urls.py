@@ -34,6 +34,6 @@ urlpatterns = [
     path('accounts/', include('mouse_force_first_step.accounts.urls')),  # Asigură-te că are prefix
     path('myapp/', include('mouse_force_first_step.myapp.urls')),
     path('privacy_policy/', include('mouse_force_first_step.mycookieprivacy.urls')),
-  
+#   path('', include('mycookieprivacy.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
