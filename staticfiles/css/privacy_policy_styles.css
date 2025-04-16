@@ -1,31 +1,32 @@
-/* Full screen overlay */
-.overlay {
-    position: fixed;
+
+#privacyPolicyModal {
+    position: absolute;
+    min-height: 100vh;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Black with transparency */
+    width: 100vw;
+    height: 100vh;
+   
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Keep it on top */
 }
 
-/* Modal (content area inside the overlay) */
+
 .modal {
     background-color: white;
+    color: black;
     padding: 30px;
     width: 60%;
     max-width: 600px;
-    max-height: 80vh; /* înălțime max */
-    overflow-y: auto; /* scroll intern */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: auto;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 20px black;
     position: relative;
 }
 
-/* Header */
 header h1 {
     font-size: 2em;
     color: #333;
@@ -45,7 +46,7 @@ header a:hover {
     text-decoration: underline;
 }
 
-/* Section styles */
+
 section {
     margin: 20px 0;
 }
@@ -55,7 +56,6 @@ section h2 {
     color: #333;
 }
 
-/* Butoane */
 .reject-btn,
 .confirm-btn {
     background-color: #6900d1;
@@ -75,7 +75,7 @@ section h2 {
     background-color: #5300a8;
 }
 
-/* Scroll personalizat pentru .modal */
+
 .modal::-webkit-scrollbar {
     width: 12px;
 }
@@ -91,3 +91,116 @@ section h2 {
     border: 3px solid #f0f0f0;
 }
 
+
+body {
+    background-image: url("/static/images/background_.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+}
+
+
+.modal {
+    background-color: white;
+    padding: 30px;
+    width: 60%;
+    max-width: 600px;
+    max-height: 80vh; 
+    overflow-y: auto; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    position: relative;
+}
+
+
+header h1 {
+    font-size: 2em;
+    color: #333;
+}
+
+header p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+header a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+
+section {
+    margin: 20px 0;
+}
+
+section h2 {
+    font-size: 2em;
+    color: #333;
+}
+
+
+.reject-btn,
+.confirm-btn {
+    background-color: #6900d1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.reject-btn:hover,
+.confirm-btn:hover {
+    background-color: #5300a8;
+}
+
+
+.modal::-webkit-scrollbar {
+    width: 12px;
+}
+
+.modal::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 12px;
+    border: 3px solid #f0f0f0;
+}
+ */

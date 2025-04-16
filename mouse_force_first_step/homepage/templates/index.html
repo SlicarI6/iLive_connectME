@@ -18,6 +18,9 @@
     </script>
 </head>
 <body>
+
+    
+   
     <input type="hidden" id="csrf_token_input" value="{{ csrf_token }}">
     <!-- Header -->
     <header>
@@ -37,19 +40,25 @@
             <a href="#" class="btn">Learn More About Our Features.</a>
         </section>
     </main>
-    <div id="cookieConsent" style="background-color: #333; color: #fff; position: fixed; bottom: 0; width: 100%; padding: 10px 0; text-align: center; z-index: 1;">
-        <p style="margin: 0;">We use cookies to ensure you get the best experience on our website.
-            <a href="{% url 'privacy_policy' %}" style="color: #FFCC00;">Privacy Policy</a>
- 
-            <!-- <a href="#" id="showCookiePolicy" style="color: #FFCC00;">Privacy Policy</a> -->
-        </p>
-        <button id="acceptCookies" style="background-color: #FFCC00; border: none; padding: 5px 20px; color: #fff;">Accept</button>
-        <button id="rejectCookies" style="background-color: #ddd; border: none; padding: 5px 20px; margin-left: 10px; color: #333;">Reject</button>
-    </div>
-    <form method="post" action="/accept_cookies/" style="margin-top: 30px;">
+    {% if show_cookie_banner %}
+        <div id="cookieOverlay"></div>
+
+        <div id="cookieConsent">
+            <p style="margin: 0;">
+                We use cookies to ensure you get the best experience on our website.
+                <a href="{% url 'privacy_policy' %}" style="color: #FFCC00;">Privacy Policy</a>
+                
+            </p>
+            <!-- <button id="acceptCookies" style="background-color: #FFCC00; border: none; padding: 5px 20px; color: #fff;">Accept</button>
+            <button id="rejectCookies" style="background-color: #ddd; border: none; padding: 5px 20px; margin-left: 10px; color: #333;">Reject</button> -->
+                <button id="acceptCookies" >Accept</button>
+                <button id="rejectCookies" >Reject</button>
+        </div>
+    {% endif %}
+    <!-- <form method="post" action="/accept_cookies/" style="margin-top: 30px;">
         {% csrf_token %}
         <button type="submit">Test POST fără fetch</button>
-      </form>
+      </form> -->
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 - Your Company</p>
@@ -57,7 +66,13 @@
 
     <!-- Cookie Consent Banner -->
 
-
+    <style>
+        #acceptCookies:active,
+        #rejectCookies:active {
+            outline: 3px solid red;
+            outline-offset: 2px;
+        }
+    </style>
    
     <script>
         function getCSRFToken() {
@@ -66,35 +81,44 @@
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
                 if (cookie.startsWith('csrftoken=')) {
-                    csrfToken = cookie.substring('csrftoken='.length, cookie.length);
+                    csrfToken = cookie.substring('csrftoken='.length);
                     break;
                 }
             }
             console.log("Token CSRF:", csrfToken);
             return csrfToken;
         }
-        
+    
+        function hideCookieElements() {
+            setTimeout(() => {
+                const cookieConsent = document.getElementById('cookieConsent');
+                const overlay = document.getElementById('cookieOverlay');
+                if (cookieConsent) cookieConsent.style.display = 'none';
+                if (overlay) overlay.style.display = 'none';
+            }, 150);
+        }
+    
         window.onload = function() {
             const cookieConsent = document.getElementById('cookieConsent');
             const acceptCookiesButton = document.getElementById('acceptCookies');
             const rejectCookiesButton = document.getElementById('rejectCookies');
-        
+    
             if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'rejected') {
-                cookieConsent.style.display = 'none'; 
+                hideCookieElements();
             } else {
                 cookieConsent.style.display = 'block';
             }
-        
+    
             if (acceptCookiesButton) {
                 acceptCookiesButton.addEventListener('click', function () {
                     console.log("Accept button clicked");
                     const csrfToken = getCSRFToken();
-        
+    
                     fetch("/accept_cookies/", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                             credentials: 'same-origin',
+                            credentials: 'same-origin',
                             'X-CSRFToken': csrfToken
                         },
                         body: JSON.stringify({ accepted: true })
@@ -106,18 +130,18 @@
                         }
                     })
                     .catch(error => console.error("Fetch error:", error));
-        
+    
                     localStorage.setItem('cookieConsent', 'accepted');
-                    cookieConsent.style.display = 'none';
+                    hideCookieElements();
                     gtag('config', 'G-70HK7C1J3M');
                 });
             }
-        
+    
             if (rejectCookiesButton) {
                 rejectCookiesButton.addEventListener('click', function () {
                     console.log("Reject button clicked");
                     const csrfToken = getCSRFToken();
-        
+    
                     fetch("/accept_cookies/", {
                         method: 'POST',
                         credentials: 'same-origin',
@@ -134,16 +158,16 @@
                         }
                     })
                     .catch(error => console.error("Fetch error:", error));
-        
+    
                     localStorage.setItem('cookieConsent', 'rejected');
-                    cookieConsent.style.display = 'none';
+                    hideCookieElements();
                     window['ga-disable-G-70HK7C1J3M'] = true;
                 });
             }
-        
             localStorage.removeItem('cookieConsent');
         };
-        </script>
-        
+    </script>
+    
+   
 </body>
 </html>

@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <div class="overlay">
+    <div id="privacyPolicyModal">
         <div class="modal">
             <header>
                 <h1>Privacy Preference Center</h1>
@@ -72,6 +72,17 @@
 
     </div>
 
+    <script>
+        // Ascunde overlay-ul când utilizatorul alege o opțiune
+        document.querySelectorAll('.reject-btn, .confirm-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const overlay = document.querySelector('.overlay');
+                if (overlay) {
+                    overlay.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
     <script>
             document.querySelector('.reject-btn').addEventListener('click', function(e) {
@@ -123,8 +134,10 @@
             })
             .then(response => response.json())
             .then(data => {
-                // alert(data.message);
-                window.location.href = '/';
+                    console.log("Fetch successful:", data);
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    document.querySelector('.confirm-btn').style.display = 'none';
+                    window.location.href = '/';
             });
         });
     </script>
