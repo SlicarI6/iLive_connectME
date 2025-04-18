@@ -8,13 +8,20 @@ body {
     overflow-x: hidden;
 }
 
-/* Header */
 header {
-    background-color: #cac402;
+    /* background: linear-gradient(135deg, #ffd700, #f7b500, #f9cb00, #e6a800); */
+    background: linear-gradient(135deg, #ffae00, #e8aa00, #dc8700, #ffae00);
+    background-size: 200% 200%;
+    animation: gradientShift 30s ease-in-out infinite;
     padding: 20px;
     text-align: center;
-}
-
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 nav a {
     color: white;
     margin: 0 10px;
@@ -101,7 +108,6 @@ footer {
     outline: 2px solid rgb(11, 253, 116);
     outline-offset: 2px;
 }
-
 
 
 

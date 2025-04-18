@@ -25,12 +25,17 @@
     <!-- Header -->
     <header>
         <h1>Welcome to our Application</h1>
+        
         <nav>
             <a href="#">Home</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
+            <a href="{% url 'login' %}">Sign In</a> |
+            <a href="{% url 'logout' %}">Sign Out</a>
         </nav>
     </header>
+    
+    
     
     <!-- Main Content -->
     <main>
