@@ -64,6 +64,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 # Combine both static folders (frontend and mycookiesprivacy)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mouse_force_first_step', 'homepage', 'static'),
