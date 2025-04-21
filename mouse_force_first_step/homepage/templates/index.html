@@ -30,8 +30,11 @@
             <a href="#">Home</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
-            <a href="{% url 'login' %}">Sign In</a> |
-            <a href="{% url 'logout' %}">Sign Out</a>
+            {% if user.is_authenticated and user.role == 'simple' %}
+            <span>You are logged in as {{ user.username }}</span>
+        {% else %}
+            <a href="#" id="openRoleOverlay">Login</a>
+        {% endif %}
         </nav>
     </header>
     
@@ -68,6 +71,48 @@
     <footer>
         <p>&copy; 2024 - Your Company</p>
     </footer>
+
+
+
+    <div id="roleOverlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <h2>Select your account type</h2>
+            <form method="post" action="{% url 'select_role' %}">
+                {% csrf_token %}
+                <label>
+                    <input type="radio" name="role" value="customer" required>
+                    Customer Account
+                </label><br>
+                <label>
+                    <input type="radio" name="role" value="simple" required>
+                    Simple User
+                </label><br><br>
+                <button type="submit">Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginLink = document.getElementById('openRoleOverlay');
+            const overlay = document.getElementById('roleOverlay');
+            const overlayContent = document.querySelector('.overlay-content');
+    
+            if (loginLink && overlay) {
+                loginLink.addEventListener('click', function (e) {
+                    e.preventDefault(); // prevenim navigarea
+                    overlay.style.display = 'flex';
+                });
+    
+                overlay.addEventListener('click', function (e) {
+                    if (!overlayContent.contains(e.target)) {
+                        overlay.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+    
 
     <!-- Cookie Consent Banner -->
 
@@ -111,7 +156,9 @@
             if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'rejected') {
                 hideCookieElements();
             } else {
-                cookieConsent.style.display = 'block';
+                if (cookieConsent) {
+                    cookieConsent.style.display = 'block';
+                }
             }
     
             if (acceptCookiesButton) {

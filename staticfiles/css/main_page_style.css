@@ -132,99 +132,40 @@ footer {
 
 
 
-
-
-
-/* body {
-    background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-
-header {
-    background-color: #cac402;
-    padding: 20px;
-    text-align: center;
-}
-
-nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-}
-
-
-main {
-    text-align: center;
-    padding: 50px;
-}
-
-.btn {
-    display: inline-block;
-    background-color: #FFCC00;
-    color: black;
-    padding: 10px 20px;
-    text-decoration: none;
-    margin-top: 20px;
-}
-
-
-footer {
-    background-color: #222;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-
-#cookieConsent button {
-    border: none;
-    padding: 5px 20px;
-    margin-left: 10px;
-    font-weight: bold;
-}
-
-
-#acceptCookies {
-    background-color: #FFCC00;
-    color: #fff;
-    cursor: pointer;
-}
-
-#rejectCookies {
-    background-color: #ddd;
-    color: #333;
-    cursor: pointer;
-    
-}
-
-#cookieOverlay {
+/* Stil pentru overlay-ul de alegere rol */
+#roleOverlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 997;
-} 
+    background-color: rgba(0, 0, 0, 0.6); /* fundal semitransparent */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
 
-#cookieConsent {
-    background-color: #333;
-    color: #fff;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 10px 0;
+/* Conținutul formularului */
+.overlay-content {
+    background-color: #f4f4f4;
+    padding: 30px 40px;
+    border-radius: 10px;
     text-align: center;
-    z-index: 1001;
-    pointer-events: auto;
-} 
-body {
-    position: relative;
-    overflow-x: hidden;
-}  */
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Stil pentru buton */
+.overlay-content button {
+    background-color: silver;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.overlay-content button:hover {
+    background-color: #d3d3d3;
+}

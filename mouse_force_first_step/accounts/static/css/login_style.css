@@ -1,0 +1,19 @@
+body {
+    background-color: silver;
+}
+
+.login-button {
+    background-color: rgb(255, 0, 0);
+    background-image: repeating-linear-gradient(
+        45deg,
+        #c0c0c0,
+        #c0c0c0 2px,
+        #d3d3d3 2px,
+        #d3d3d3 4px
+    );
+    border: 1px solid #555;
+    padding: 8px 16px;
+    font-weight: bold;
+    color: black;
+    border-radius: 4px;
+}

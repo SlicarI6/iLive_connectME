@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Account Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+</head>
+<body>
+    <h2>Create a Customer Account</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign Up Customer</button>
+    </form>
+
+    <p>Already have an account? <a href="{% url 'login' %}">Log in here</a></p>
+</body>
+</html>

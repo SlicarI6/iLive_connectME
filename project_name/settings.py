@@ -42,7 +42,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mouseforce.onrender.com']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Asigură-te că acest director este corect
+        'DIRS': [BASE_DIR / 'mouse_force_first_step' / 'accounts' / 'templates'],
         'APP_DIRS': True,  # Permite căutarea template-urilor în directoarele aplicațiilor
         'OPTIONS': {
             'context_processors': [
@@ -73,6 +73,11 @@ STATICFILES_DIRS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+    'mouse_force_first_step.accounts.auth_backends.EmailOrUsernameBackend',
+    'django.contrib.auth.backends.ModelBackend', 
+]
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 print("BASE_DIR:", BASE_DIR) 
 MIDDLEWARE = [
@@ -97,6 +102,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',  # Mesaje flash
     'django.contrib.staticfiles',  # Fișiere statice (CSS, JS)
     'mouse_force_first_step.accounts',
+    'mouse_force_first_step.customerpanel',
     'mouse_force_first_step.homepage',
     'mouse_force_first_step.myapp',
     'mouse_force_first_step.mycookieprivacy',

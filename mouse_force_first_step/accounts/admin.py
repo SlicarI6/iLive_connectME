@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import CustomUser  # importă modelul
 
-# Register your models here.
+admin.site.register(CustomUser)  # înregistrează modelul în admin

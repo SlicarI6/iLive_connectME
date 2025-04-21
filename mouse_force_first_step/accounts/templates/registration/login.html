@@ -1,30 +1,44 @@
-
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
     <title>Login</title>
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <p>You are logged in as {{ user.username }}. <a href="{% url 'logout' %}">Logout</a></p>
+    {% if user.is_authenticated and user.role == 'customer' %}
+        <script>
+            window.location.href = "{% url 'customer_dashboard' %}";
+        </script>
     {% else %}
         {% if messages %}
             {% for message in messages %}
                 <p>{{ message }}</p>
             {% endfor %}
         {% endif %}
+
         <h2>Login</h2>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+
+            <label for="username">
+                {% if request.session.selected_role == 'simple' %}
+                    Email:
+                {% else %}
+                    Username or Email:
+                {% endif %}
+            </label>
+            <input type="text" name="username" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" required><br>
+
             <button type="submit">Login</button>
         </form>
-        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p> <!-- Adjust this link if needed -->
+
+        <p>Don't have an account? <a href="{% url 'customer_account_signup' %}">Sign up</a></p>
     {% endif %}
-    <script src="{% static 'dist/bundle.js' %}"></script>
 </body>
 </html>

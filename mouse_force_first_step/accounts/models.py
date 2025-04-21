@@ -7,4 +7,4 @@ class CustomUser(AbstractUser):
         ('customer', 'Customer Account'),
     )
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
-
+    birth_date = models.DateField(null=True, blank=True)  # 🔹 Adăugat aici
