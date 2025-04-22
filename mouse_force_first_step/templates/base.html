@@ -14,38 +14,37 @@
         gtag('js', new Date());
         gtag('config', 'G-70HK7C1J3M');
     </script>
+
+    <!-- 🛡️ Fix Back Button Cookie Flash -->
+    <script>
+        if (performance.navigation.type === 2) {
+            window.addEventListener('pageshow', function () {
+                const banner = document.getElementById('cookieConsent');
+                const overlay = document.getElementById('cookieOverlay');
+                if (localStorage.getItem('cookieConsent')) {
+                    if (banner) banner.style.display = 'none';
+                    if (overlay) overlay.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
-    <!-- 🔒 FIX instant pentru flash cookie -->
-    <script>
-        const consent = localStorage.getItem('cookieConsent');
-        if (consent === 'accepted' || consent === 'rejected') {
-            const banner = document.getElementById('cookieConsent');
-            const overlay = document.getElementById('cookieOverlay');
-            if (banner) banner.style.display = 'none';
-            if (overlay) overlay.style.display = 'none';
-        }
-    </script>
-
     <header>
-        {% block header %}
-        {% endblock %}
+        {% block header %}{% endblock %}
     </header>
 
     <main>
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
     <footer>
-        {% block footer %}
-        {% endblock %}
+        {% block footer %}{% endblock %}
     </footer>
 
     {% if show_cookie_banner %}
     <div id="cookieOverlay"></div>
-
     <div id="cookieConsent">
         <p style="margin: 0;">
             We use cookies to ensure you get the best experience on our website.
@@ -87,9 +86,7 @@
             if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'rejected') {
                 hideCookieElements();
             } else {
-                if (cookieConsent) {
-                    cookieConsent.style.display = 'block';
-                }
+                if (cookieConsent) cookieConsent.style.display = 'block';
             }
 
             if (acceptCookiesButton) {
@@ -130,8 +127,7 @@
         };
     </script>
 
-    {% block extra_js %}
-    {% endblock %}
+    {% block extra_js %}{% endblock %}
 
 </body>
 </html>
