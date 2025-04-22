@@ -43,9 +43,8 @@
         {% block footer %}{% endblock %}
     </footer>
 
-    {% if show_cookie_banner %}
-    <div id="cookieOverlay"></div>
-    <div id="cookieConsent">
+    <div id="cookieOverlay" style="display: none;"></div>
+    <div id="cookieConsent" style="display: none;">
         <p style="margin: 0;">
             We use cookies to ensure you get the best experience on our website.
             <a href="{% url 'privacy_policy' %}" style="color: #FFCC00;">Privacy Policy</a>
@@ -53,7 +52,7 @@
         <button id="acceptCookies">Accept</button>
         <button id="rejectCookies">Reject</button>
     </div>
-    {% endif %}
+    
 
     <script>
         function getCSRFToken() {
