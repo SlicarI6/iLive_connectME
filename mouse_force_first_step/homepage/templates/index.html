@@ -36,6 +36,7 @@
 {% block extra_js %}
 
 <!-- Select Role Overlay -->
+<!-- Select Role Overlay -->
 <div id="roleOverlay" class="overlay" style="display: none;">
     <div class="overlay-content">
         <h2>Select your account type</h2>
@@ -48,22 +49,8 @@
     </div>
 </div>
 
-<!-- Cookie Banner (always in HTML) -->
-<div id="cookieOverlay" style="display: none;"></div>
-
-<div id="cookieConsent" style="display: none;">
-    <p style="margin: 0;">
-        We use cookies to ensure you get the best experience on our website.
-        <a href="{% url 'privacy_policy' %}" style="color: #FFCC00;">Privacy Policy</a>
-    </p>
-    <button id="acceptCookies">Accept</button>
-    <button id="rejectCookies">Reject</button>
-</div>
-
-<!-- JS pentru overlay și cookies -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // === Overlay login ===
     const loginLink = document.getElementById('openRoleOverlay');
     const overlay = document.getElementById('roleOverlay');
     const overlayContent = document.querySelector('.overlay-content');
@@ -78,57 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!overlayContent.contains(e.target)) {
                 overlay.style.display = 'none';
             }
-        });
-    }
-
-    // === Cookie Logic ===
-    const cookieConsent = document.getElementById('cookieConsent');
-    const cookieOverlay = document.getElementById('cookieOverlay');
-    const acceptBtn = document.getElementById('acceptCookies');
-    const rejectBtn = document.getElementById('rejectCookies');
-
-    const consent = localStorage.getItem('cookieConsent');
-
-    if (consent !== 'accepted' && consent !== 'rejected') {
-        cookieConsent.style.display = 'block';
-        cookieOverlay.style.display = 'block';
-    }
-
-    function getCSRFToken() {
-        const name = 'csrftoken';
-        const cookieValue = document.cookie.split('; ').find(row => row.startsWith(name + '='));
-        return cookieValue ? cookieValue.split('=')[1] : '';
-    }
-
-    if (acceptBtn) {
-        acceptBtn.addEventListener('click', () => {
-            fetch("{% url 'accept_cookies' %}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken()
-                },
-                body: JSON.stringify({ accepted: true })
-            });
-            localStorage.setItem('cookieConsent', 'accepted');
-            cookieConsent.style.display = 'none';
-            cookieOverlay.style.display = 'none';
-        });
-    }
-
-    if (rejectBtn) {
-        rejectBtn.addEventListener('click', () => {
-            fetch("{% url 'accept_cookies' %}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken()
-                },
-                body: JSON.stringify({ accepted: false })
-            });
-            localStorage.setItem('cookieConsent', 'rejected');
-            cookieConsent.style.display = 'none';
-            cookieOverlay.style.display = 'none';
         });
     }
 });
