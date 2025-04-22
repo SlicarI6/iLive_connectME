@@ -17,6 +17,17 @@
 </head>
 <body>
 
+    <!-- 🔒 FIX instant pentru flash cookie -->
+    <script>
+        const consent = localStorage.getItem('cookieConsent');
+        if (consent === 'accepted' || consent === 'rejected') {
+            const banner = document.getElementById('cookieConsent');
+            const overlay = document.getElementById('cookieOverlay');
+            if (banner) banner.style.display = 'none';
+            if (overlay) overlay.style.display = 'none';
+        }
+    </script>
+
     <header>
         {% block header %}
         {% endblock %}
