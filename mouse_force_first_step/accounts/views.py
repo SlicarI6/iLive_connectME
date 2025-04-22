@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm
 from datetime import datetime
+import random
 User = get_user_model()
 
 def generate_unique_username(first_name, last_name, birth_date):
@@ -57,6 +58,19 @@ def customer_account_signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+            base_username = f"{user.first_name.lower()}{user.last_name.lower()}"
+            username = base_username
+            attempts = 0
+
+            while CustomUser.objects.filter(username=username).exists():
+                suffix = random.randint(1, 999)
+                username = f"{base_username}{suffix}"
+                attempts += 1
+                if attempts > 5:
+                    username = f"{base_username}{random.randint(1000, 9999)}"
+                    break
+
+            user.username = username
             user.role = 'customer'
             user.backend = 'mouse_force_first_step.accounts.auth_backends.EmailOrUsernameBackend'
             user.save()
