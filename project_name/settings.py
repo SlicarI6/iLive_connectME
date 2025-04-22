@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -42,7 +42,10 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mouseforce.onrender.com']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'mouse_force_first_step' / 'accounts' / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'mouse_force_first_step' / 'templates',
+            BASE_DIR / 'mouse_force_first_step' / 'accounts' / 'templates',
+        ],
         'APP_DIRS': True,  # Permite căutarea template-urilor în directoarele aplicațiilor
         'OPTIONS': {
             'context_processors': [

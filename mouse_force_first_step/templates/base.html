@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_page_style.css' %}">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-70HK7C1J3M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-70HK7C1J3M');
+    </script>
+</head>
+<body>
+
+    <header>
+        {% block header %}
+        {% endblock %}
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}
+        {% endblock %}
+    </footer>
+
+    {% if show_cookie_banner %}
+    <div id="cookieOverlay"></div>
+
+    <div id="cookieConsent">
+        <p style="margin: 0;">
+            We use cookies to ensure you get the best experience on our website.
+            <a href="{% url 'privacy_policy' %}" style="color: #FFCC00;">Privacy Policy</a>
+        </p>
+        <button id="acceptCookies">Accept</button>
+        <button id="rejectCookies">Reject</button>
+    </div>
+    {% endif %}
+
+    <script>
+        function getCSRFToken() {
+            let csrfToken = null;
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith('csrftoken=')) {
+                    csrfToken = cookie.substring('csrftoken='.length);
+                    break;
+                }
+            }
+            return csrfToken;
+        }
+
+        function hideCookieElements() {
+            setTimeout(() => {
+                const cookieConsent = document.getElementById('cookieConsent');
+                const overlay = document.getElementById('cookieOverlay');
+                if (cookieConsent) cookieConsent.style.display = 'none';
+                if (overlay) overlay.style.display = 'none';
+            }, 150);
+        }
+
+        window.onload = function () {
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookiesButton = document.getElementById('acceptCookies');
+            const rejectCookiesButton = document.getElementById('rejectCookies');
+
+            if (localStorage.getItem('cookieConsent') === 'accepted' || localStorage.getItem('cookieConsent') === 'rejected') {
+                hideCookieElements();
+            } else {
+                if (cookieConsent) {
+                    cookieConsent.style.display = 'block';
+                }
+            }
+
+            if (acceptCookiesButton) {
+                acceptCookiesButton.addEventListener('click', function () {
+                    const csrfToken = getCSRFToken();
+                    fetch("/accept_cookies/", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            credentials: 'same-origin',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify({ accepted: true })
+                    });
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    hideCookieElements();
+                    gtag('config', 'G-70HK7C1J3M');
+                });
+            }
+
+            if (rejectCookiesButton) {
+                rejectCookiesButton.addEventListener('click', function () {
+                    const csrfToken = getCSRFToken();
+                    fetch("/accept_cookies/", {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify({ accepted: false })
+                    });
+                    localStorage.setItem('cookieConsent', 'rejected');
+                    hideCookieElements();
+                    window['ga-disable-G-70HK7C1J3M'] = true;
+                });
+            }
+        };
+    </script>
+
+    {% block extra_js %}
+    {% endblock %}
+
+</body>
+</html>
