@@ -6,6 +6,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm
 from datetime import datetime
+from django.core.mail import send_mail
+from django.http import JsonResponse
+import json
 import random
 User = get_user_model()
 
@@ -83,39 +86,39 @@ def customer_account_signup(request):
     return render(request, 'registration/customer_account_signup.html', {'form': form})
 
 
-def login_view(request):
-    role = request.session.get('selected_role', 'customer')  # ✅ luăm rolul din sesiune
+def login_simple_user_view(request):
+    request.session['selected_role'] = 'simple'
 
     if request.method == 'POST':
-        identifier = request.POST.get('username')  # poate fi email sau username
+        email = request.POST.get('username')
         password = request.POST.get('password')
-        selected_role = request.session.get('selected_role')
+
+        user = authenticate(request, username=email, password=password)
+        if user and user.role == 'simple':
+            login(request, user)
+            return redirect('homepage')  # 🔁 redirecționează spre homepage
+        else:
+            messages.error(request, "Invalid credentials or role mismatch.")
+
+    return render(request, 'registration/login_simple_user.html', {'role': 'simple'})
+
+def login_account_customer_view(request):
+    request.session['selected_role'] = 'customer'
+
+    if request.method == 'POST':
+        identifier = request.POST.get('username')  # poate fi username sau email
+        password = request.POST.get('password')
 
         user = authenticate(request, username=identifier, password=password)
-
-        if user:
-            print("ROL SELECTAT:", selected_role)
-            print("ROL USER:", user.role)
-
-            # ✅ Restricție: Simple user trebuie să folosească doar email
-            if selected_role == 'simple' and '@' not in identifier:
-                messages.error(request, 'Simple Users must log in using email.')
-                return render(request, 'registration/login.html', {'role': role})
-
+        print("AUTH RESULT:", user)
+        if user and user.role == 'customer':
+            print("USER ROLE:", user.role)
             login(request, user)
-
-            # ✅ Redirecționare în funcție de rol
-            if selected_role == 'customer' and user.role == 'customer':
-                return redirect('customer_dashboard')
-            elif selected_role == 'simple' and user.role == 'simple':
-                return redirect('homepage')
-            else:
-                messages.error(request, 'Role mismatch.')
+            return redirect('customer_dashboard')  # 🔁 redirecționează spre dashboard-ul clientului
         else:
-            messages.error(request, 'Invalid username/email or password.')
-
-    return render(request, 'registration/login.html', {'role': role})  # ✅ trimitem rolul în template
-
+            messages.error(request, "Invalid credentials or role mismatch.")
+    
+    return render(request, 'registration/login_account_customer.html', {'role': 'customer'})
 
 
 
@@ -124,5 +127,73 @@ def select_role_view(request):
     if request.method == 'POST':
         selected_role = request.POST.get('role')
         request.session['selected_role'] = selected_role
-        return redirect('login')  # Te redirecționează către login
+
+        if selected_role == 'simple':
+            return redirect('login_simple_user')
+        else:
+            return redirect('login_account_customer')
+
     return render(request, 'init_session.html')
+
+
+
+def simple_user_password_reset_request(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email, role='simple')
+            # Creează o parolă temporară (ex: 6 caractere simple)
+            from django.utils.crypto import get_random_string
+            new_password = get_random_string(6)
+            user.set_password(new_password)
+            user.save()
+
+            # Trimite email
+            send_mail(
+                'Password Reset',
+                f'Your new password is: {new_password}',
+                'no-reply@example.com',
+                [email],
+                fail_silently=False,
+            )
+            messages.success(request, 'Check your email for the new password.')
+        except User.DoesNotExist:
+            messages.error(request, 'Email not found or invalid user.')
+    return render(request, 'registration/password_reset_simple_user.html')
+
+
+def check_email_exists_simple_user(request):
+    if request.method == 'POST':
+        import json
+        data = json.loads(request.body)
+        email = data.get('email')
+        exists = User.objects.filter(email=email, role='simple').exists()
+        print("EMAIL PRIMIT:", email, "| EXISTS:", exists)
+        return JsonResponse({'exists': exists})
+
+def check_email_exists_customer_account(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        email = data.get('email')
+        exists = User.objects.filter(email=email, role='customer').exists()
+        print("CHECK CUSTOMER EMAIL:", email, "| EXISTS:", exists)
+        return JsonResponse({'exists': exists})
+    
+    
+def check_username_exists_customer_account(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        exists = User.objects.filter(username=username, role='customer').exists()
+        return JsonResponse({'exists': exists})
+    
+    
+def recover_username_customer(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        email = data.get('email')
+        try:
+            user = User.objects.get(email=email, role='customer')
+            return JsonResponse({'success': True, 'username': user.username})
+        except User.DoesNotExist:
+            return JsonResponse({'success': False})
