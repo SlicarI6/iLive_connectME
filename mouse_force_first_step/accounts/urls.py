@@ -14,11 +14,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='homepage'), name='logout'),
     path('select-role/', select_role_view, name='select_role'),
     path('customer-signup/', customer_account_signup, name='customer_account_signup'),
-    path('simple_user_signup/', simple_user_signup_view, name='simple_user_signup'),
-    path('reset-password-simple/', simple_user_password_reset_request, name='simple_user_password_reset'),
-    path('check-email/simple-user/', views.check_email_exists_simple_user, name='check_email_exists_simple_user'),
-    path('check-email-customer/', views.check_email_exists_customer_account, name='check_email_exists_customer_account'),
-    path('check-username-customer/', views.check_username_exists_customer_account, name='check_username_exists_customer_account'),
-    path('recover-username-customer/', views.recover_username_customer, name='recover_username_customer'),
-
+    path('simple-user-signup/', simple_user_signup_view, name='simple_user_signup'),
 ]

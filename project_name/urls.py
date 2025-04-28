@@ -7,10 +7,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mouse_force_first_step.homepage.urls')),
-    path('accounts/', include('mouse_force_first_step.accounts.urls')),  # Asigură-te că are prefix
+    path('accounts/', include('mouse_force_first_step.accounts.urls')),
+    path('accounts/', include('allauth.urls')),  # las-o imediat după accounts.urls
     path('myapp/', include('mouse_force_first_step.myapp.urls')),
     path('privacy_policy/', include('mouse_force_first_step.mycookieprivacy.urls')),
     path('customer/', include('mouse_force_first_step.customerpanel.urls')),
-    
-
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

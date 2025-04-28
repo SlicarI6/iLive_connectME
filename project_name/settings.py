@@ -28,6 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+SITE_ID = 1
+
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -35,9 +37,31 @@ CSRF_TRUSTED_ORIGINS = ['https://mouseforce.onrender.com']
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mouseforce.onrender.com']
 
   # Permite accesul de oriunde; în producție setează domeniul corect.
+SOCIAL_AUTH_GOOGLE_CLIENT_ID = config('SOCIAL_AUTH_GOOGLE_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_SECRET = config('SOCIAL_AUTH_GOOGLE_SECRET')
+
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
+ACCOUNT_ADAPTER = 'mouse_force_first_step.accounts.adapters.MyAccountAdapter'
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+LOGIN_REDIRECT_URL = '/accounts/post-login/'
 
 
 # Application definition
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
 
 TEMPLATES = [
     {
@@ -77,9 +101,11 @@ STATICFILES_DIRS = [
 
 
 AUTHENTICATION_BACKENDS = [
-    'mouse_force_first_step.accounts.auth_backends.EmailOrUsernameBackend',
-    'django.contrib.auth.backends.ModelBackend', 
+    'mouse_force_first_step.accounts.auth_backends.EmailOrUsernameBackend',  # custom login email/username
+    'django.contrib.auth.backends.ModelBackend',  # clasic Django
+    'allauth.account.auth_backends.AuthenticationBackend',  # pentru Google login
 ]
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 print("BASE_DIR:", BASE_DIR) 
@@ -93,24 +119,35 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'project_name.urls'
 
 INSTALLED_APPS = [
-    'django.contrib.admin',  # Admin panel
-    'django.contrib.auth',  # Autentificare utilizatori
-    'django.contrib.contenttypes',  # Tipuri de conținut
-    'django.contrib.sessions',  # Gestionarea sesiunilor
-    'django.contrib.messages',  # Mesaje flash
-    'django.contrib.staticfiles',  # Fișiere statice (CSS, JS)
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # aplicațiile tale
     'mouse_force_first_step.accounts',
     'mouse_force_first_step.customerpanel',
     'mouse_force_first_step.homepage',
     'mouse_force_first_step.myapp',
     'mouse_force_first_step.mycookieprivacy',
+
+    # pentru login cu Google
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    # alte third-party apps
     'corsheaders',
-    # Adaugă și aplicațiile tale aici
 ]
 
 WSGI_APPLICATION = 'project_name.wsgi.application'
